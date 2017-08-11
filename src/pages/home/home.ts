@@ -16,7 +16,7 @@ export class HomePage {
       .subscribe(users => {
         this.users = users;
       },
-      err => console.log(err),
+      err => console.log(JSON.stringify(err)),
       () => {});
   }
  

@@ -11,8 +11,8 @@ export class UserServiceProvider {
   }
  
   getUsers(): Observable<User[]>{
-    return this.http.get('https://api.github.com/users')
-       .map(res => <Array<User>>res.json()); 
+    return this.http.get('http://localhost:5000/todo/api/v1.0/tasks')
+       .map(res => {console.log(JSON.stringify(res)); return <Array<User>>res.json(); }); 
   }
  
 }
