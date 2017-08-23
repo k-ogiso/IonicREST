@@ -1,16 +1,21 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Tasks
+      To Do List
     </ion-title>
   </ion-navbar>
 </ion-header>
- 
+
 <ion-content padding>
+  <ion-buttons end>
+    <button ion-button icon-only>
+        <ion-icon name="add"></ion-icon></button>
+  </ion-buttons>
   <ion-list>
-    <button ion-item *ngFor="let user of users">
-      <h2>title : {{ user.title }}</h2>
-      <h2>description : {{ user.description }}</h2>
-    </button>
+    <ion-item ion-item *ngFor="let task of tasks">
+      <div class="td">{{ task.end_date | date:'M/d' }}</div>
+      <div class="spacer" style="width: 20px;"></div>
+      <div class="td">{{ task.item }}</div>
+    </ion-item>
   </ion-list>
 </ion-content>
