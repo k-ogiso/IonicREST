@@ -1,12 +1,18 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      <img src="/assets/icon/logo2.JPG" width="190px" height="40px" align="middle" /> 2017/08/23
-    </ion-title>
+      <img src="/assets/icon/logo2.JPG" width="190px" height="40px" align="middle" /> 
+     </ion-title>
   </ion-navbar>
 </ion-header>
-
 <ion-content padding>
+    <div align="center">
+     <font size="5"> 
+        <ion-icon name="bookmark"></ion-icon>
+        Today 2017/08/23
+        <BR>
+     </font>   
+    </div>
     <ion-buttons end>
     <!-- 
     <ion-item>
@@ -14,7 +20,7 @@
      <ion-input type="text" value=""></ion-input>
     </ion-item>
   -->
-  <ion-grid>
+    <ion-grid>
       <ion-row>
     <ion-col>
       <ion-label> Not yet </ion-label>
@@ -33,9 +39,11 @@
      
     <ion-list>
     <ion-list-header>
-      <div> End of date
-         <span style="margin-right: 30px;"></span>
-          To do items </div>
+      <font size="2"> 
+       <div> End of date
+          <span style="margin-right: 30px;"></span>
+           To do items </div>
+      </font>    
      </ion-list-header>
     <ion-item ion-item *ngFor="let task of tasks">
       <div class="td">{{ task.end_date | date:'M/d' }}</div>
