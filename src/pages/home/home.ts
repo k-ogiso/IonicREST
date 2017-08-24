@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { TaskServiceProvider } from '../../providers/task-service';
 import { Task } from '../../model/task';
+import { AddPage } from '../add/add';
 
 @Component({
   selector: 'page-home',
@@ -23,4 +24,9 @@ export class HomePage {
   delTask(task_id: number): void {
     this.taskService.delTask(task_id).subscribe();;
   }
+
+  goToAddPage() {
+    this.navCtrl.push(AddPage);
+  }
+
 }

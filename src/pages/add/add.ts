@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { TaskServiceProvider } from '../../providers/task-service';
+import { Task } from '../../model/task';
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the AddPage page.
@@ -15,11 +18,32 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AddPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  item: string;
+  endDate: string;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private taskService: TaskServiceProvider
+  ) {
+
+    this.item = navParams.get("item");
+    this.endDate = navParams.get("endDate");
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddPage');
+  }
+
+  goToHomePage() {
+    this.navCtrl.push(HomePage);
+  }
+
+  addTask(): void {
+    console.log("addTask");
+    console.log(this.item);
+    // this.taskService.addTask(task).subscribe();
   }
 
 }

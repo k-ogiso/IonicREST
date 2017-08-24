@@ -12,7 +12,24 @@
 
 </ion-header>
 
-
 <ion-content padding>
 
+  <ion-item>
+    <ion-label color="primary" stacked>Item</ion-label>
+    <ion-input type="text" name="item" ></ion-input>
+    {{ item }}
+  </ion-item>
+
+  <ion-item>
+    <ion-label color="primary" stacked>End Date</ion-label>
+    <!-- <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime> -->
+    <ngb-datepicker #dp [(ngModel)]="model" (navigate)="date = $event.next" name="endDate"></ngb-datepicker>
+  </ion-item>
+
+
+
+  <div class="footer-buttons">
+    <button ion-button icon-start color="secondary" (click)="goToHomePage()">Return</button>
+    <button ion-button icon-end class="pull-right" (click)="addTask()">Submit</button>
+  </div>
 </ion-content>
