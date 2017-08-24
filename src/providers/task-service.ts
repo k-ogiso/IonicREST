@@ -32,8 +32,8 @@ export class TaskServiceProvider {
   addTask(task: Task): Observable<Task> {
     // return this.http.post(`${this.baseURL}/tasks`, task)
     //   .map(res => res.json() as Task);
-    return this.http.post(`${this.baseURL}/tasks`, task);
-      // .map(res => res.json() as Task);
+    return this.http.post(`${this.baseURL}/tasks`, task)
+       .map(res => null);
   }
   /**
    * タスクを削除

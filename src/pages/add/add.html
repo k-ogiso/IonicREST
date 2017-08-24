@@ -23,10 +23,9 @@
 
   <ion-item>
     <ion-label color="primary" stacked>End Date</ion-label>
-    <!-- <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime> -->
-    <ngb-datepicker #dp [(ngModel)]="endDate" (navigate)="date = $event.next" name="endDate"></ngb-datepicker>
   </ion-item>
 
+  <ngb-datepicker #dp [(ngModel)]="endDate" (navigate)="date = $event.next" name="endDate"></ngb-datepicker>
 
 
 
