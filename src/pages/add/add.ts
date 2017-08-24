@@ -19,18 +19,15 @@ import { HomePage } from '../home/home';
 export class AddPage {
 
   item: string;
-  endDate: string;
+  endDate;
+  errmsg: string;
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
     private taskService: TaskServiceProvider
   ) {
 
-    this.item = navParams.get("item");
-    this.endDate = navParams.get("endDate");
-
-  }
+ }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddPage');
@@ -41,9 +38,27 @@ export class AddPage {
   }
 
   addTask(): void {
-    console.log("addTask");
-    console.log(this.item);
+
+    var task;
+
+
+    if (this.item === undefined || this.endDate === undefined) {
+      this.errmsg = "未入力項目があります"
+      return;
+    }
+
+
+    task = new Object();
+    task.item = this.item;
+    task.end_date = this.endDate.year.toString() + "-" + this.endDate.month.toString() + "-" + this.endDate.day.toString();
+
+    console.log(task);
+
+    this.taskService.addTask({ "item":task.item,"end_date":task.end_date }).subscribe();
+
     // this.taskService.addTask(task).subscribe();
+
+    this.goToHomePage();
   }
 
 }
