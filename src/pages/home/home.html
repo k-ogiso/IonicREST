@@ -1,19 +1,19 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      <img src="/assets/icon/logo2.JPG" width="190px" height="40px" align="middle" /> 
-     </ion-title>
+      <img src="/assets/icon/logo2.JPG" width="190px" height="40px" align="middle" />
+    </ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-    <div align="center">
-     <font size="5"> 
-        <ion-icon name="bookmark"></ion-icon>
-        August 24, 2017
-        <BR>
-     </font>   
-    </div>
-    <ion-buttons end>
+  <div align="center">
+    <font size="5">
+      <ion-icon name="bookmark"></ion-icon>
+      August 24, 2017
+      <BR>
+    </font>
+  </div>
+  <ion-buttons end>
     <!-- 
     <ion-item>
       <ion-label fixed>何か</ion-label>
@@ -22,33 +22,35 @@
   -->
     <ion-grid>
       <ion-row>
-    <ion-col>
-      <ion-label> Not yet </ion-label>
-    </ion-col>
-       <ion-col>
-    <ion-toggle disabled checked="false"></ion-toggle>
-       </ion-col>
-       <ion-col col-20>
-    <button ion-button small>
+        <ion-col>
+          <ion-label> Not yet </ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-toggle disabled checked="false"></ion-toggle>
+        </ion-col>
+        <ion-col col-20>
+          <button ion-button small (click)="goToAddPage()">
       <ion-icon name="add"></ion-icon></button>
-       </ion-col>
-     </ion-row>
+        </ion-col>
+      </ion-row>
     </ion-grid>
-   </ion-buttons>
-  
-     
-    <ion-list>
+  </ion-buttons>
+
+
+  <ion-list>
     <ion-list-header>
-      <font size="2"> 
-       <div> End of date
+      <font size="2">
+        <div>
+          <b>End of date</b>
           <span style="margin-right: 30px;"></span>
-           To do items </div>
-      </font>    
-     </ion-list-header>
-    <ion-item ion-item *ngFor="let task of tasks">
-      <div class="td">{{ task.end_date | date:'M/d' }}</div>
-      <div class="spacer" style="width: 70px;"></div>
-      <div class="td">{{ task.item }}</div>
+          <b>To do items</b>
+        </div>
+      </font>
+    </ion-list-header>
+    <ion-item ion-item *ngFor="let task of tasks.filter(filt)">
+       <div class="td">{{ task.end_date | date:'M/d' }}</div>
+       <div class="spacer" style="width: 70px;"></div>
+       <div class="td">{{ task.item }}</div>
     </ion-item>
   </ion-list>
 </ion-content>
