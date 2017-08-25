@@ -5,12 +5,12 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-      <ion-navbar>
-        <ion-title>add</ion-title>
-      </ion-navbar>
-
-    </ion-header>
+    <ion-navbar>
+      <ion-title>
+        <img src="./assets/icon/logo2.JPG" width="190px" height="40px" align="middle" />
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
 
     <ion-content padding>
 
@@ -75,17 +75,17 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col align-self="center">
+      <ion-col class="alcenter">
           <ngb-datepicker #dp [(ngModel)]="endDate" (navigate)="date = $event.next" name="endDate"></ngb-datepicker>
       </ion-col>
     </ion-row>
 
     <ion-row>
         <ion-col>
-            <button ion-button block icon-start color="secondary" (click)="goToHomePage()">Return</button>
+            <button ion-button block icon-start round color="secondary" (click)="goToHomePage()">Return</button>
         </ion-col>
         <ion-col>
-            <button ion-button block icon-end (click)="addTask()">Submit</button>
+            <button ion-button block icon-end round (click)="addTask()">Submit</button>
         </ion-col>
     </ion-row>
 

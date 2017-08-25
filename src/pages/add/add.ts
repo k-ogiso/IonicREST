@@ -90,7 +90,7 @@ export class AddPage {
   selectTask(task,e) {
     console.log(task);
     console.log(e);
-    this.item = task;
+    this.item = task + " ";
     this.showRecomendItem();
   }
 
