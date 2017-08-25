@@ -6,60 +6,60 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>add</ion-title>
-  </ion-navbar>
+      <ion-navbar>
+        <ion-title>add</ion-title>
+      </ion-navbar>
 
-</ion-header>
+    </ion-header>
 
-<ion-content padding>
+    <ion-content padding>
 
-<ion-row>
-  <ion-col>
-      <ion-label color="primary">{{errmsg}}</ion-label>
-  </ion-col>
-</ion-row>
+    <ion-row>
+      <ion-col>
+          <ion-label color="primary">{{errmsg}}</ion-label>
+      </ion-col>
+    </ion-row>
 
-<ion-row>
-  <ion-col>
-      <ion-label color="primary">Item</ion-label>
-  </ion-col>
-</ion-row>
-<ion-row>
-  <ion-col col-10>
-    <ion-item>
-      <ion-input type="text" [(ngModel)]="item"></ion-input>
-    </ion-item>
-  </ion-col>
-  <ion-col>
-      <ion-fab>
-        <button ion-fab (click)="showTaskList()" class="pull-right">ADD</button>
-      </ion-fab>
-  </ion-col>
-</ion-row>
+    <ion-row>
+      <ion-col>
+          <ion-label color="primary">Item</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-input type="text" placeholder="input new task" autofocus [(ngModel)]="item"  (keyup)="showRecomendItem($event)"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
+    <div *ngIf="recomendTasks.length != 0">
+        <ion-row>
+          もしかして・・・
+          <div *ngFor="let task of recomendTasks">
+            <button ion-button round small (click)="selectTask(task)">{{task}}</button>
+          </div>
+        </ion-row>
+    </div>
 
-<ion-row>
-  <ion-col>
-      <ion-label color="primary">End Date</ion-label>
-  </ion-col>
-</ion-row>
-<ion-row>
-  <ion-col align-self="center">
-      <ngb-datepicker #dp [(ngModel)]="endDate" (navigate)="date = $event.next" name="endDate"></ngb-datepicker>
-  </ion-col>
-</ion-row>
+    <ion-row>
+      <ion-col>
+          <ion-label color="primary">End Date</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col align-self="center">
+          <ngb-datepicker #dp [(ngModel)]="endDate" (navigate)="date = $event.next" name="endDate"></ngb-datepicker>
+      </ion-col>
+    </ion-row>
 
-<ion-row>
-    <ion-col>
-        <button ion-button block icon-start color="secondary" (click)="goToHomePage()">Return</button>
-    </ion-col>
-    <ion-col>
-        <button ion-button block icon-end (click)="addTask()">Submit</button>
-    </ion-col>
-</ion-row>
+    <ion-row>
+        <ion-col>
+            <button ion-button block icon-start color="secondary" (click)="goToHomePage()">Return</button>
+        </ion-col>
+        <ion-col>
+            <button ion-button block icon-end (click)="addTask()">Submit</button>
+        </ion-col>
+    </ion-row>
 
-
-
-
-</ion-content>
+    </ion-content>
