@@ -44,7 +44,7 @@
     <ion-item [color]="task.status===1?'light':''" ion-item *ngFor="let task of tasks.filter(filt)">
       <div class="td" [ngClass]="{imp:isToday(task)}"> {{ isToday(task) ? 'today!' : (task.end_date | date:'M/d') }}</div>
       <div class="spacer" style="width: 20px;"></div>
-      <div class="td" (click)="showAlert(task)" (dblclick)="onDblclick(task)" (on-hold)="onHold(task)" (tap)="onTap(task)">{{ task.item }}</div>
+      <div class="td" (click)="showAlert(task)" (press)="onPress(task)">{{ task.item }}</div>
     </ion-item>
   </ion-list>
 </ion-content>
