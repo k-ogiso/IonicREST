@@ -33,7 +33,7 @@ export class TaskServiceProvider {
     // return this.http.post(`${this.baseURL}/tasks`, task)
     //   .map(res => res.json() as Task);
     return this.http.post(`${this.baseURL}/tasks`, task)
-       .map(res => null);
+      .map(res => null);
   }
   /**
    * タスクを削除
@@ -41,5 +41,14 @@ export class TaskServiceProvider {
   delTask(task_id: number): Observable<boolean> {
     return this.http.delete(`${this.baseURL}/task/${task_id}`)
       .map(res => res.json() as boolean);
+  }
+  /**
+   * タスクを更新
+   */
+  updTask(task_id: number): Observable<boolean> {
+    return Observable.create(() => { true });
+    //   return this.http.put(`${this.baseURL}/task/${task_id}`,null)
+    //     .map(res => res.json() as boolean);
+    //
   }
 }
