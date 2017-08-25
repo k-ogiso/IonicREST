@@ -44,13 +44,13 @@
           <span style="margin-right: 30px;"></span>
           <b>items</b>
         </div>
-      </font> 
+      </font>
       <button ion-button full outline small color="dark" (click)="getPastTasks()">{{pastFlg?'▲ Show ':'▼ Hide '}} past items</button>
     </ion-list-header>
-    <ion-item ion-item *ngFor="let task of tasks.filter(filt)">
-      <div class="td">{{ task.end_date | date:'M/d' }}</div>
+    <ion-item [color]="task.status===1?'light':''" ion-item *ngFor="let task of tasks.filter(filt)">
+      <div class="td" [ngClass]="{imp:isToday(task)}"> {{ isToday(task) ? 'today!' : (task.end_date | date:'M/d') }}</div>
       <div class="spacer" style="width: 20px;"></div>
-      <div class="td" (dblclick)="onDblclick(task)" (on-hold)="onHold(task)" (tap)="onTap(task)" >{{ task.item }}</div>
+      <div class="td" (click)="showAlert(task)" (dblclick)="onDblclick(task)" (on-hold)="onHold(task)" (tap)="onTap(task)">{{ task.item }}</div>
     </ion-item>
   </ion-list>
 </ion-content>
