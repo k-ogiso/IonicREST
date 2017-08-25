@@ -58,14 +58,20 @@ export class HomePage {
   getPastTasks() {
     this.pastFlg = !this.pastFlg;
   }
-  onClick(task_id) {
-    this.taskService.updTask(task_id).subscribe(()=>{
-      this.taskService.getTasks().subscribe(tasks => { this.tasks = tasks; });
-    });
+  onClick(task) {
+    if (task.status !== 1) {
+      this.taskService.updTask(task.task_id).subscribe(() => {
+        this.taskService.getTasks().subscribe(tasks => { this.tasks = tasks; });
+      });
+    } else {
+    }
   }
-  onHold(task_id) {
-    this.taskService.updTask(task_id).subscribe(()=>{
-      this.taskService.getTasks().subscribe(tasks => { this.tasks = tasks; });
-    });
+  onHold(task) {
+    if (task.status !== 1) {
+      this.taskService.updTask(task.task_id).subscribe(() => {
+        this.taskService.getTasks().subscribe(tasks => { this.tasks = tasks; });
+      });
+    } else {
+    }
   }
 }

@@ -44,9 +44,8 @@ export class TaskServiceProvider {
    * タスクを更新
    */
   updTask(task_id: number): Observable<boolean> {
-    return Observable.create(() => { true });
-    //   return this.http.put(`${this.baseURL}/task/${task_id}`,null)
-    //     .map(res => res.json() as boolean);
-    //
+    // return Observable.create(() => { true });
+      return this.http.put(`${this.baseURL}/task/${task_id}`,null)
+        .map(res => res.json() as boolean);
   }
 }
