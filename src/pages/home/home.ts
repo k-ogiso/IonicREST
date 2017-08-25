@@ -58,7 +58,7 @@ export class HomePage {
   getPastTasks() {
     this.pastFlg = !this.pastFlg;
   }
-  onClick(task) {
+  onDblclick(task) {
     if (task.status !== 1) {
       this.taskService.updTask(task.task_id).subscribe(() => {
         this.taskService.getTasks().subscribe(tasks => { this.tasks = tasks; });
@@ -67,6 +67,14 @@ export class HomePage {
     }
   }
   onHold(task) {
+    if (task.status !== 1) {
+      this.taskService.updTask(task.task_id).subscribe(() => {
+        this.taskService.getTasks().subscribe(tasks => { this.tasks = tasks; });
+      });
+    } else {
+    }
+  }
+  onTap(task) {
     if (task.status !== 1) {
       this.taskService.updTask(task.task_id).subscribe(() => {
         this.taskService.getTasks().subscribe(tasks => { this.tasks = tasks; });
