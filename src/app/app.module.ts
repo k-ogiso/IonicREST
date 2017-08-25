@@ -5,11 +5,10 @@ import { HttpModule } from '@angular/http';
 import { CommonModule, DecimalPipe, DatePipe } from '@angular/common';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
-import { AddPage } from '../pages/add/add';
 import { SigninPage } from '../pages/signin/signin';
 import { SignupPage } from '../pages/signup/signup';
+import { HomePage } from '../pages/home/home';
+import { AddPage } from '../pages/add/add';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -20,8 +19,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     MyApp,
+    SigninPage,
+    SignupPage,
     HomePage,
-    ListPage,
     AddPage
   ],
   imports: [
@@ -33,8 +33,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    SigninPage,
+    SignupPage,
     HomePage,
-    ListPage,
     AddPage
   ],
   providers: [

@@ -14,5 +14,18 @@
 
 
 <ion-content padding>
+  <ion-item>
+    <ion-label floating>ID</ion-label>
+    <ion-input clearInput type="text" [(ngModel)]="user_id" min="3" max="30" autofocus></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Password</ion-label>
+    <ion-input clearInput type="password" [(ngModel)]="password" min="8" max="30"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Password(verify)</ion-label>
+    <ion-input clearInput type="password" [(ngModel)]="password_v" min="8" max="30"></ion-input>
+  </ion-item>
+  <button ion-button block small (click)="null">JOIN!!</button>
 
 </ion-content>
