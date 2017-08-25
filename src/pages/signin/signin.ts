@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { SignupPage } from '../signup/signup';
+import { AccountServiceProvider } from '../../providers/account-service';
 
 /**
  * Generated class for the SigninPage page.
@@ -21,13 +22,23 @@ export class SigninPage {
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams
+    public navParams: NavParams,
+    public accountService: AccountServiceProvider
   ) {
+    this.rememberme = true;
   }
   signup() {
     this.navCtrl.push(SignupPage);
   }
   login() {
-    this.navCtrl.push(HomePage);
+    this.accountService.login({ user_id: this.user_id, password: this.password, rememberme: this.rememberme }).subscribe(
+      (ret) => {
+        if (ret) {
+          this.navCtrl.push(HomePage);
+        } else {
+          this.password = '';
+        }
+      }
+    );
   }
 }

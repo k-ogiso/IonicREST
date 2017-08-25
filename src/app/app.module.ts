@@ -13,6 +13,7 @@ import { AddPage } from '../pages/add/add';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TaskServiceProvider } from '../providers/task-service';
+import { AccountServiceProvider } from '../providers/account-service';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -44,6 +45,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     DatePipe, DecimalPipe,
     TaskServiceProvider,
+    AccountServiceProvider,
   ]
 })
 export class AppModule { }
