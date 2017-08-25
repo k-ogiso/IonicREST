@@ -39,24 +39,20 @@ export class AddPage {
 
   addTask(): void {
 
-    var task;
-
-
     if (this.item === undefined || this.endDate === undefined) {
       this.errmsg = "未入力項目があります"
       return;
     }
 
-
-    task = new Object();
+    const task = new Task();
     task.item = this.item;
     task.end_date = this.endDate.year.toString() + "-" + this.endDate.month.toString() + "-" + this.endDate.day.toString();
 
     console.log(task);
 
-    this.taskService.addTask({ "item":task.item,"end_date":task.end_date }).subscribe();
+    // this.taskService.addTask({ "item":task.item,"end_date":task.end_date }).subscribe();
 
-    // this.taskService.addTask(task).subscribe();
+    this.taskService.addTask(task).subscribe();
 
     this.goToHomePage();
   }
