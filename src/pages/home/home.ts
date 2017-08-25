@@ -11,11 +11,21 @@ import { AddPage } from '../add/add';
 export class HomePage {
 
   tasks: Task[];
+  tglFlg: boolean;
+  filt = (rec: Task): boolean => {
+    if (this.tglFlg && rec.status !== 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   constructor(
     public navCtrl: NavController,
     private taskService: TaskServiceProvider
   ) {
+    this.tasks = [];
+    this.tglFlg = false;
     taskService.getTasks().subscribe(tasks => { this.tasks = tasks; });
   }
   addTask(task: Task): void {
@@ -28,5 +38,4 @@ export class HomePage {
   goToAddPage() {
     this.navCtrl.push(AddPage);
   }
-
 }
