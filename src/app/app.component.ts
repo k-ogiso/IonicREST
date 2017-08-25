@@ -7,6 +7,8 @@ import { HomePage } from '../pages/home/home';
 import { AddPage } from '../pages/add/add';
 import { SigninPage } from '../pages/signin/signin';
 import { SignupPage } from '../pages/signup/signup';
+import { AccountServiceProvider } from '../providers/account-service';
+
 
 @Component({
   templateUrl: 'app.html'
@@ -14,12 +16,19 @@ import { SignupPage } from '../pages/signup/signup';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = SigninPage;
+  loadFlg: boolean;
+  rootPage: any;
 
   pages: Array<{ title: string, component: any }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(
+    public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,
+    public accountService: AccountServiceProvider
+  ) {
     this.initializeApp();
+    this.loadFlg = false;
 
     // used for an example of ngFor and navigation
     this.pages = [
@@ -28,7 +37,11 @@ export class MyApp {
       { title: 'Home', component: HomePage },
       { title: 'Add', component: AddPage }
     ];
-
+    this.accountService.getLogin().subscribe(ret => {
+      // ログイン済みセッションの場合はいきなりHomeに行く
+      this.rootPage = ret ? HomePage : SigninPage;
+      this.loadFlg = true;
+    });
   }
 
   initializeApp() {
