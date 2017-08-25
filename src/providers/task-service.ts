@@ -30,9 +30,7 @@ export class TaskServiceProvider {
    * 新規タスクを登録
    */
   addTask(task: Task): Observable<Task> {
-    // return this.http.post(`${this.baseURL}/tasks`, task)
-    //   .map(res => res.json() as Task);
-    return this.http.post(`${this.baseURL}/tasks`, task)
+    return this.http.post(`${this.baseURL}/task`, task)
        .map(res => null);
   }
   /**
