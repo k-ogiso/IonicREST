@@ -45,7 +45,7 @@
           <b>items</b>
         </div>
       </font> 
-      <button ion-button full outline small color="dark" (click)="getPastTasks()">▲ Past</button>
+      <button ion-button full outline small color="dark" (click)="getPastTasks()">{{pastFlg?'▲':'▼'}} Past</button>
     </ion-list-header>
     <ion-item ion-item *ngFor="let task of tasks.filter(filt)">
       <div class="td">{{ task.end_date | date:'M/d' }}</div>
