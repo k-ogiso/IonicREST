@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { TaskServiceProvider } from '../../providers/task-service';
 import { Task } from '../../model/task';
 import { HomePage } from '../home/home';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 /**
  * Generated class for the AddPage page.
@@ -12,7 +12,6 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
  * on Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-add',
   templateUrl: 'add.html',
@@ -66,15 +65,15 @@ export class AddPage {
 
     this.recomendTasks = [];
 
-    if (this.item.length != 0){
-      for (var i = 0; i < this.fixedTaskList.length; i++){
+    if (this.item.length != 0) {
+      for (var i = 0; i < this.fixedTaskList.length; i++) {
         if (this.item.substr(0, this.item.length) == this.fixedTaskList[i].substr(0, this.item.length)) {
           console.log(this.fixedTaskList[i]);
           this.recomendTasks.push(this.fixedTaskList[i]);
         }
       }
     }
-      console.log(e);
+    console.log(e);
 
     console.log(this.recomendTasks);
 
