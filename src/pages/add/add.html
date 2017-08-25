@@ -14,11 +14,13 @@
 
     <ion-content padding>
 
-    <ion-row>
-      <ion-col>
-          <ion-label color="primary">{{errmsg}}</ion-label>
-      </ion-col>
-    </ion-row>
+    <div *ngIf="errmsg.length != 0">
+      <ion-row>
+        <ion-col>
+            <ion-label color="danger">{{errmsg}}</ion-label>
+        </ion-col>
+      </ion-row>
+   </div>
 
     <ion-row>
       <ion-col>
@@ -28,19 +30,44 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-input type="text" placeholder="input new task" autofocus [(ngModel)]="item"  (keyup)="showRecomendItem($event)"></ion-input>
+          <ion-input type="text" placeholder="input new task" autofocus [(ngModel)]="item"   (keyup)="showRecomendItem($event)"></ion-input>
         </ion-item>
+
+        <!-- <div *ngIf="recomendTasks.length != 0">
+            <ul class="list-group"  *ngFor="let task of recomendTasks">
+                <li class="list-group-item">{{task}}</li>
+            </ul>
+        </div> -->
+
+        <div *ngIf="recomendTasks.length != 0">
+
+            <div class="list-group">
+                <a href="#" class="list-group-item" (focus)="selectTask(task,$event)" *ngFor="let task of recomendTasks">{{task}}</a>
+            </div>
+<!--
+            <select multiple class="selectpicker">
+                <option *ngFor="let task of recomendTasks" (keydown)="selectTask(task,$event)"><a>{{task}}</a></option>
+             </select> -->
+        </div>
+
       </ion-col>
     </ion-row>
 
-    <div *ngIf="recomendTasks.length != 0">
-        <ion-row>
-          もしかして・・・
+    <!-- <div *ngIf="recomendTasks.length != 0">
+        <ul class="list-group"  *ngFor="let task of recomendTasks">
+            <li class="list-group-item">{{task}}</li>
+        </ul> -->
+
+        <!-- <ion-row>
+          <ion-label color="primary" ngbTooltip="aaaa">Did you mean: </ion-label>
+        </ion-row> -->
+        <!-- <ion-row>
           <div *ngFor="let task of recomendTasks">
-            <button ion-button round small (click)="selectTask(task)">{{task}}</button>
+            <ng-template #tipContent>Hello, <b>{{name}}</b>!</ng-template>
+            <button ion-button round small (click)="selectTask(task)" [ngbTooltip]="tipContent" >{{task}}</button>
           </div>
-        </ion-row>
-    </div>
+        </ion-row> -->
+    <!-- </div> -->
 
     <ion-row>
       <ion-col>

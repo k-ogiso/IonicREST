@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { TaskServiceProvider } from '../../providers/task-service';
 import { Task } from '../../model/task';
 import { HomePage } from '../home/home';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons, NgbDateStruct,NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
 
 /**
  * Generated class for the AddPage page.
@@ -12,25 +12,31 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
  * on Ionic pages and navigation.
  */
 
+const today = new Date();
+
 @Component({
   selector: 'page-add',
   templateUrl: 'add.html',
+  providers: [NgbTooltipConfig] // add NgbTooltipConfig to the component providers
 })
 export class AddPage {
 
   item: string;
-  endDate;
-  errmsg: string;
+  endDate: NgbDateStruct = {year:today.getFullYear(),month:today.getMonth()+1,day:today.getDate()};
+  errmsg: string = "";
   closeResult: string;
-  fixedTaskList: string[] = ["pay", "call", "send", "check", "get", "goto"];
+  fixedTaskList: string[] = ["pay", "call", "send", "check", "get", "go to"];
   recomendTasks: string[] = [];
 
   constructor(
     public navCtrl: NavController,
     private taskService: TaskServiceProvider,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    config: NgbTooltipConfig
   ) {
-    // this.item.setFocus();
+    // customize default values of tooltips used by this component tree
+    config.placement = 'bottom';
+    config.triggers = 'click';
   }
 
   ionViewDidLoad() {
@@ -61,27 +67,31 @@ export class AddPage {
     this.goToHomePage();
   }
 
-  showRecomendItem(e) {
+  showRecomendItem() {
 
     this.recomendTasks = [];
 
-    if (this.item.length != 0) {
-      for (var i = 0; i < this.fixedTaskList.length; i++) {
-        if (this.item.substr(0, this.item.length) == this.fixedTaskList[i].substr(0, this.item.length)) {
-          console.log(this.fixedTaskList[i]);
-          this.recomendTasks.push(this.fixedTaskList[i]);
+    if (this.item != null) {
+      if (this.item.length != 0) {
+        for (var i = 0; i < this.fixedTaskList.length; i++) {
+          if (this.item.substr(0, this.item.length) == this.fixedTaskList[i].substr(0, this.item.length)) {
+            console.log(this.fixedTaskList[i]);
+            this.recomendTasks.push(this.fixedTaskList[i]);
+          }
         }
       }
     }
-    console.log(e);
+
 
     console.log(this.recomendTasks);
 
   }
 
-  selectTask(task) {
+  selectTask(task,e) {
     console.log(task);
+    console.log(e);
     this.item = task;
+    this.showRecomendItem();
   }
 
 }
