@@ -23,7 +23,7 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-label> All </ion-label>
+          <ion-label> + Done </ion-label>
         </ion-col>
         <ion-col>
           <ion-toggle [(ngModel)]="tglFlg"></ion-toggle>
@@ -38,7 +38,6 @@
 
   <ion-list>
     <ion-list-header>
-       <button ion-button full outline small color="light" (click)="getPastTasks()">Past</button>
       <font size="4">
         <div>
           <b>End</b>
@@ -46,6 +45,7 @@
           <b>items</b>
         </div>
       </font> 
+      <button ion-button full outline small color="dark" (click)="getPastTasks()">▲ Past</button>
     </ion-list-header>
     <ion-item ion-item *ngFor="let task of tasks.filter(filt)">
       <div class="td">{{ task.end_date | date:'M/d' }}</div>
