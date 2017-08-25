@@ -24,7 +24,7 @@ export class HomePage {
     let m = (this.month2.length === 1 ? "0" : "") + this.month2;
     let d = (this.day.length === 1 ? "0" : "") + this.day;
     const cur_date_ymd = cd.getFullYear() + "-" + m + "-" + d;
-    if ((this.tglFlg && rec.status !== 0) || (this.pastFlg && cur_date_ymd > end_date_ymd)) {
+    if ((!this.tglFlg && rec.status !== 0) || (this.pastFlg && cur_date_ymd > end_date_ymd)) {
       return false;
     } else {
       return true;
