@@ -27,4 +27,7 @@ export class SigninPage {
   signup() {
     this.navCtrl.push(SignupPage);
   }
+  login() {
+    this.navCtrl.push(HomePage);
+  }
 }
