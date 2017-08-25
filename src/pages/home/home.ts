@@ -45,17 +45,12 @@ export class HomePage {
     this.tasks = [];
     this.tglFlg = false;
     this.pastFlg = true;
-<<<<<<< HEAD
-  }
-  ionViewDidEnter() {
-    this.taskService.getTasks().subscribe(tasks => { this.tasks = tasks; });
-=======
-
     const m = (this.month2.length === 1 ? "0" : "") + this.month2;
     const d = (this.day.length === 1 ? "0" : "") + this.day;
     this.currentDateYmd = this.currentDate.getFullYear() + "-" + m + "-" + d
-    taskService.getTasks().subscribe(tasks => { this.tasks = tasks; });
->>>>>>> origin/haya5
+  }
+  ionViewDidEnter() {
+    this.taskService.getTasks().subscribe(tasks => { this.tasks = tasks; });
   }
   endDateToYmd(end_date: string): string {
     return end_date.split(" ")[0];
