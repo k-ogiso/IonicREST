@@ -63,4 +63,9 @@ export class HomePage {
       this.taskService.getTasks().subscribe(tasks => { this.tasks = tasks; });
     });
   }
+  onHold(task_id) {
+    this.taskService.updTask(task_id).subscribe(()=>{
+      this.taskService.getTasks().subscribe(tasks => { this.tasks = tasks; });
+    });
+  }
 }

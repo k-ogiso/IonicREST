@@ -50,7 +50,7 @@
     <ion-item ion-item *ngFor="let task of tasks.filter(filt)">
       <div class="td">{{ task.end_date | date:'M/d' }}</div>
       <div class="spacer" style="width: 20px;"></div>
-      <div class="td" (click)="onClick(task.task_id)">{{ task.item }}</div>
+      <div class="td" (click)="onClick(task.task_id)" (on-hold)="onHold(task.task_id)" >{{ task.item }}</div>
     </ion-item>
   </ion-list>
 </ion-content>
