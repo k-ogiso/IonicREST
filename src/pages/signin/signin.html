@@ -15,4 +15,23 @@
 
 <ion-content padding>
 
+  <ion-row>
+    <ion-col>
+      <a href="#" (click)="signup()">Sing Up</a>
+    </ion-col>
+  </ion-row>
+  <ion-item>
+    <ion-label floating>ID</ion-label>
+    <ion-input clearInput type="text" [(ngModel)]="user_id" min="3" max="30" autofocus></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Password</ion-label>
+    <ion-input clearInput type="password" [(ngModel)]="password" min="8" max="30"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>remember me</ion-label>
+    <ion-checkbox [(ngModel)]="rememberme"></ion-checkbox>
+  </ion-item>
+  <button ion-button block small (click)="null">CHECK MY LIFE</button>
+
 </ion-content>

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { HomePage } from '../home/home';
+import { SignupPage } from '../signup/signup';
 
 /**
  * Generated class for the SigninPage page.
@@ -13,12 +15,16 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'signin.html',
 })
 export class SigninPage {
+  user_id: string;
+  password: string;
+  rememberme: boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams
+  ) {
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SigninPage');
+  signup() {
+    this.navCtrl.push(SignupPage);
   }
-
 }

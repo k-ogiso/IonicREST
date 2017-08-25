@@ -43,7 +43,9 @@ export class HomePage {
     this.tasks = [];
     this.tglFlg = false;
     this.pastFlg = true;
-    taskService.getTasks().subscribe(tasks => { this.tasks = tasks; });
+  }
+  ionViewDidEnter() {
+    this.taskService.getTasks().subscribe(tasks => { this.tasks = tasks; });
   }
   addTask(task: Task): void {
     this.taskService.addTask(task).subscribe();
@@ -51,7 +53,6 @@ export class HomePage {
   delTask(task_id: number): void {
     this.taskService.delTask(task_id).subscribe();
   }
-
   goToAddPage() {
     this.navCtrl.push(AddPage);
   }
