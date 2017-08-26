@@ -41,10 +41,16 @@
       </font>
       <button ion-button full outline small color="dark" (click)="getPastTasks()">{{pastFlg?'▲ Show ':'▼ Hide '}} past items</button>
     </ion-list-header>
-    <ion-item [color]="task.status===1?'light':''" ion-item *ngFor="let task of tasks.filter(filt)">
-      <div class="td" [ngClass]="{imp:isToday(task)}"> {{ isToday(task) ? 'today!' : (task.end_date | date:'M/d') }}</div>
-      <div class="spacer" style="width: 20px;"></div>
-      <div class="td" (click)="showAlert(task)" (dblclick)="onDblclick(task)" (on-hold)="onHold(task)" (tap)="onTap(task)">{{ task.item }}</div>
-    </ion-item>
+    <ion-item-sliding *ngFor="let task of tasks.filter(filt)">
+        <ion-item [color]="task.status===1?'light':''" ion-item >
+        <div class="td" [ngClass]="{imp:isToday(task)}"> {{ isToday(task) ? 'today!' : (task.end_date | date:'M/d') }}</div>
+        <div class="spacer" style="width: 20px;"></div>
+        <!--<div class="td" (click)="showAlert(task)" (dblclick)="onDblclick(task)" (on-hold)="onHold(task)" (tap)="onTap(task)">{{ task.item }}</div>-->
+        <div class="td" (click)="showAlert(task)" (press)="onPress(task)">{{ task.item }}</div>
+        </ion-item>
+        <ion-item-options side="right" *ngIf="task.status===0">
+            <button ion-button (click)="onPress(task)" color="danger">Done</button>
+        </ion-item-options>
+        </ion-item-sliding>
   </ion-list>
 </ion-content>
