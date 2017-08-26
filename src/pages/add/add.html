@@ -14,19 +14,18 @@
 
     <ion-content padding>
 
-    <div *ngIf="errmsg.length != 0">
-      <ion-row>
-        <ion-col>
-            <ion-label color="danger">{{errmsg}}</ion-label>
-        </ion-col>
-      </ion-row>
-   </div>
-
     <ion-row>
       <ion-col>
-          <ion-label color="primary">Item</ion-label>
+          <ion-label color="primary">New item</ion-label>
       </ion-col>
     </ion-row>
+    <div *ngIf="errmsg.length != 0">
+        <ion-row>
+          <ion-col>
+              <ion-label color="danger">{{errmsg}}</ion-label>
+          </ion-col>
+        </ion-row>
+     </div>
     <ion-row>
       <ion-col>
         <ion-item>
