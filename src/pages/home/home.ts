@@ -5,10 +5,30 @@ import { Task } from '../../model/task';
 import { DatePipe } from '@angular/common'
 import { AddPage } from '../add/add';
 import { AlertController } from 'ionic-angular';
+import { trigger, animate, transition, style } from '@angular/animations';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  animations: [
+    trigger('viewhide', [
+      transition('void => *', [
+        style({
+          opacity: 0,
+          height: 0,
+          // transform: 'translateY(-30%)'
+        }),
+        animate('0.3s ease')
+      ]),
+      transition('* => void', [
+        animate('0.3s ease', style({
+          opacity: 0,
+          height: 0,
+          // transform: 'translateY(-30%)'
+        }))
+      ]),
+    ]),
+  ],
 })
 export class HomePage {
 
@@ -21,6 +41,7 @@ export class HomePage {
   month2: string;
   day: string;
   year: string;
+  counter: number = 0;
 
   filt = (rec: Task): boolean => {
     const end_date_ymd = this.endDateToYmd(rec.end_date);
@@ -31,6 +52,27 @@ export class HomePage {
       return true;
     }
   }
+  upd = tasks => {
+    // 全体リフレッシュするか一部リフレッシュかの判定（アニメーションの感じに関わるところ）
+    let refreshFlg = tasks.length !== this.tasks.length;
+    if (refreshFlg) {
+    } else {
+      for (let idx = 0; idx < tasks.length; idx++) {
+        if (tasks[idx].task_id === this.tasks[idx].task_id) {
+          if (this.tasks[idx].status !== tasks[idx].status) {
+            this.tasks[idx] = tasks[idx];
+          }
+        } else {
+          refreshFlg = true;
+          break;
+        }
+      }
+    }
+    if (refreshFlg) {
+      this.tasks = tasks;
+    } else {
+    }
+  };
 
   constructor(
     public navCtrl: NavController,
@@ -50,7 +92,7 @@ export class HomePage {
     this.currentDateYmd = this.currentDate.getFullYear() + "-" + m + "-" + d
   }
   ionViewDidEnter() {
-    this.taskService.getTasks().subscribe(tasks => { this.tasks = tasks; });
+    this.taskService.getTasks().subscribe(this.upd);
   }
   endDateToYmd(end_date: string): string {
     return end_date.split(" ")[0];
@@ -70,10 +112,10 @@ export class HomePage {
   getPastTasks() {
     this.pastFlg = !this.pastFlg;
   }
-  onPress(task) {
-    if (task.status !== 1) {
-      this.taskService.updTask(task.task_id).subscribe(() => {
-        this.taskService.getTasks().subscribe(tasks => { this.tasks = tasks; });
+  updateStatus(task, status) {
+    if (task.status !== status) {
+      this.taskService.updTask(task.task_id, status).subscribe(() => {
+        this.taskService.getTasks().subscribe(this.upd);
       });
     } else {
     }
@@ -82,7 +124,9 @@ export class HomePage {
     let alert = this.alertCtrl.create({
       title: this.datePipe.transform(task.end_date, 'y/M/d(EEE)'),
       subTitle: task.item,
-      buttons: ['Close']
+      buttons: [
+        { text: 'Edit', handler: () => { this.navCtrl.push(AddPage, { target: task }); } },
+        { text: 'Close' }]
     });
     alert.present();
   }

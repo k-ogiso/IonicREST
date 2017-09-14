@@ -8,28 +8,31 @@ import { Const } from '../utils/const';
 export class AccountServiceProvider {
     baseURL = `${Const.API_BASE_URL}${Const.API_VERSION}`;
 
-    constructor(public http: Http) {
-    }
+    constructor(public http: Http) {}
 
     /**
      * ログイン済みかどうかチェック
      */
     getLogin(): Observable<boolean> {
         return this.http.get(`${this.baseURL}/login`)
-            .map(res => res.json() as boolean);
+        .map(res => res.json() as boolean);
+        // return this.http.get(`${this.baseURL}/false.json`)
+        //     .map(res => res.json() as boolean);
     }
     /**
      * ログイン
      */
     login(login): Observable<boolean> {
+        // return this.http.get(`${this.baseURL}/true.json`)
         return this.http.put(`${this.baseURL}/login`, login)
             .map(res => res.json() as boolean);
     }
     /**
-     * ログイン
+     * サインアップ（アカウント登録）
      */
     signup(login): Observable<boolean> {
         return this.http.post(`${this.baseURL}/login`, login)
-            .map(res => res.json() as boolean);
+        .map(res => res.json() as boolean);
+        // return this.http.get(`${this.baseURL}/true.json`)
     }
 }

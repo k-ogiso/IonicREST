@@ -1,24 +1,25 @@
 page-add {
-    .ngb-dp-day[_ngcontent-c3], .ngb-dp-weekday[_ngcontent-c3], .ngb-dp-week-number[_ngcontent-c3] {
+    .ngb-dp-day[_ngcontent-c4],
+    .ngb-dp-weekday[_ngcontent-c4],
+    .ngb-dp-week-number[_ngcontent-c4] {
         width: 4rem;
         height: 3rem;
         font-size: 1.7rem;
     }
-
-    .ngb-dp-header[_ngcontent-c0] {
-        height: 6.00rem  !important;
+    .ngb-dp-header[_ngcontent-c1] {
+        height: 6.00rem !important;
     }
-
-    select[_ngcontent-c4]{
+    select[_ngcontent-c5] {
         font-size: 1.4rem;
     }
-
-    ngb-datepicker-navigation-select{
+    ngb-datepicker-navigation-select {
         width: 12rem !important;
     }
-
-    .alcenter{
+    .alcenter {
         display: inline-block;
         text-align: center;
+        width: 100%;
+        padding-right: 16px;
+        padding-left: 16px;
     }
 }

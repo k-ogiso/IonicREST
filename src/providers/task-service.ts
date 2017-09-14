@@ -31,7 +31,7 @@ export class TaskServiceProvider {
    */
   addTask(task: Task): Observable<Task> {
     return this.http.post(`${this.baseURL}/task`, task)
-       .map(res => null);
+      .map(res => null);
   }
   /**
    * タスクを削除
@@ -41,11 +41,17 @@ export class TaskServiceProvider {
       .map(res => res.json() as boolean);
   }
   /**
+   * タスクのステータスを更新
+   */
+  updTask(task_id: number, status: number): Observable<boolean> {
+    return this.http.put(`${this.baseURL}/task/${task_id}`, { status: status })
+      .map(res => res.json() as boolean);
+  }
+  /**
    * タスクを更新
    */
-  updTask(task_id: number): Observable<boolean> {
-    // return Observable.create(() => { true });
-      return this.http.put(`${this.baseURL}/task/${task_id}`,null)
-        .map(res => res.json() as boolean);
+  edtTask(task: Task): Observable<boolean> {
+    return this.http.put(`${this.baseURL}/task/${task.task_id}`, { task: task })
+      .map(res => res.json() as boolean);
   }
 }

@@ -7,9 +7,12 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>signup</ion-title>
+    <ion-navbar>
+      <ion-title>
+        <img src="./assets/icon/logo3.png" width="190px" height="40px" align="middle" />
+      </ion-title>
+    </ion-navbar>
   </ion-navbar>
-
 </ion-header>
 
 
@@ -27,5 +30,4 @@
     <ion-input clearInput type="password" [(ngModel)]="password_v" min="8" max="30"></ion-input>
   </ion-item>
   <button ion-button block small (click)="signup()">JOIN!!</button>
-
 </ion-content>

@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { TaskServiceProvider } from '../../providers/task-service';
 import { Task } from '../../model/task';
-import { HomePage } from '../home/home';
-import { NgbModal, ModalDismissReasons, NgbDateStruct,NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
 
 /**
  * Generated class for the AddPage page.
@@ -20,9 +19,12 @@ const today = new Date();
   providers: [NgbTooltipConfig] // add NgbTooltipConfig to the component providers
 })
 export class AddPage {
-
-  item: string;
-  endDate: NgbDateStruct = {year:today.getFullYear(),month:today.getMonth()+1,day:today.getDate()};
+  @ViewChild("it")
+  it: any;
+  @ViewChild("dp")
+  dp: ElementRef;
+  task: Task;
+  endDate: NgbDateStruct;
   errmsg: string = "";
   closeResult: string;
   fixedTaskList: string[] = ["pay", "call", "send", "check", "get", "go to"];
@@ -30,68 +32,64 @@ export class AddPage {
 
   constructor(
     public navCtrl: NavController,
+    public navParams: NavParams,
     private taskService: TaskServiceProvider,
-    private modalService: NgbModal,
     config: NgbTooltipConfig
   ) {
     // customize default values of tooltips used by this component tree
     config.placement = 'bottom';
     config.triggers = 'click';
+    this.recomendTasks = [];
+    const target = this.navParams.get('target') as Task;
+    if (target) {
+      this.task = target;
+      const ary = target.end_date.split(' ')[0].split('-');
+      this.endDate = { year: Number(ary[0]), month: Number(ary[1]), day: Number(ary[2]) };
+    } else {
+      this.task = new Task();
+      this.task.task_id = -1;
+      this.endDate = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
+    }
   }
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddPage');
+    setTimeout(() => { this.it.setFocus(); }, 1000);
   }
-
   goToHomePage() {
-    this.navCtrl.pop(HomePage);
+    this.navCtrl.pop();
   }
-
   addTask(): void {
-
-    if (this.item === undefined || this.endDate === undefined) {
+    if (this.task.item === undefined || this.endDate === undefined) {
       this.errmsg = "未入力項目があります"
       return;
     }
-
-    const task = new Task();
-    task.item = this.item;
-    task.end_date = this.endDate.year.toString() + "-" + this.endDate.month.toString() + "-" + this.endDate.day.toString();
-
-    console.log(task);
-
-    // this.taskService.addTask({ "item":task.item,"end_date":task.end_date }).subscribe();
-
-    this.taskService.addTask(task).subscribe();
-
+    const m = (this.endDate.month > 9 ? '' : '0') + this.endDate.month;
+    const d = (this.endDate.day > 9 ? '' : '0') + this.endDate.day;
+    this.task.end_date = this.endDate.year + "-" + m + "-" + d;
+    console.log(this.task);
+    if (this.task.task_id == -1) {
+      this.taskService.addTask(this.task).subscribe();
+    } else {
+      this.taskService.edtTask(this.task).subscribe();
+    }
     this.goToHomePage();
   }
-
   showRecomendItem() {
-
     this.recomendTasks = [];
-
-    if (this.item != null) {
-      if (this.item.length != 0) {
-        for (var i = 0; i < this.fixedTaskList.length; i++) {
-          if (this.item.substr(0, this.item.length) == this.fixedTaskList[i].substr(0, this.item.length)) {
-            console.log(this.fixedTaskList[i]);
-            this.recomendTasks.push(this.fixedTaskList[i]);
-          }
+    if (this.task.item && this.task.item.length > 0) {
+      for (var i = 0; i < this.fixedTaskList.length; i++) {
+        if (this.task.item.substr(0, this.task.item.length).toLowerCase() == this.fixedTaskList[i].substr(0, this.task.item.length)) {
+          console.log(this.fixedTaskList[i]);
+          this.recomendTasks.push(this.fixedTaskList[i]);
         }
       }
     }
-
-
     console.log(this.recomendTasks);
-
   }
-
-  selectTask(task,e) {
+  selectTask(task, e) {
     console.log(task);
     console.log(e);
-    this.item = task + " ";
+    this.task.item = task + " ";
     this.showRecomendItem();
   }
-
 }

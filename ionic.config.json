@@ -4,9 +4,11 @@
   "type": "ionic-angular",
   "proxies": [
     {
-      "path": "/todo/api",
-      "proxyUrl": "http://localhost:5000/todo/api"
+      "path": "/todo/api/",
+      "proxyUrl": "http://kvps-27-34-160-205.secure.ne.jp/Do-no/api/"
     }
   ],
-  "integrations": {}
+  "integrations": {
+    "cordova": {}
+  }
 }

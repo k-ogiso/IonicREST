@@ -1,6 +1,33 @@
 page-home {
-    .imp{
-        color:#ff4500;
+    ion-list-header {
+        &.list-header-md {
+            border-top: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .label.label-md {
+            margin-bottom: 0;
+        }
+        .barbutton.button-md {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+    }
+    .ctl {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0 16px 0 24px;
+         :last-child {
+            margin-left: auto;
+        }
+    }
+    .th {
+        font-size: 14pt;
+        font-weight: bold;
+    }
+    .imp {
+        color: #ff4500;
     }
     .table {
         border: 1px solid black;
