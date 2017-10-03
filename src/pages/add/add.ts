@@ -54,6 +54,12 @@ export class AddPage {
     config.placement = 'bottom';
     config.triggers = 'click';
     this.recomendTasks = [];
+  }
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad AddPage');
+    setTimeout(() => { this.it.setFocus(); }, 1000);
+  }
+  ionViewDidEnter() {
     const target = this.navParams.get('target') as Task;
     if (target) {
       this.task = target;
@@ -66,10 +72,6 @@ export class AddPage {
       this.endDate = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
       this.ga.trackView('add').then(() => { console.log('GoogleAnalytics OK') });
     }
-  }
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AddPage');
-    setTimeout(() => { this.it.setFocus(); }, 1000);
   }
   goToHomePage() {
     this.navCtrl.pop();

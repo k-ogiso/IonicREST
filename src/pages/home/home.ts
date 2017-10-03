@@ -96,7 +96,6 @@ export class HomePage {
     private datePipe: DatePipe,
     public ga: GoogleAnalytics,
   ) {
-    this.ga.trackView('home').then(() => { console.log('GoogleAnalytics OK') });
     this.currentDate = new Date();
     this.day = String(this.currentDate.getDate());
     this.month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][this.currentDate.getMonth()];
@@ -111,6 +110,7 @@ export class HomePage {
   }
   ionViewDidEnter() {
     this.taskService.getTasks().subscribe(this.upd, this.errorFunc);
+    this.ga.trackView('home').then(() => { console.log('GoogleAnalytics OK') });
   }
   endDateToYmd(end_date: string): string {
     return end_date.split(" ")[0];

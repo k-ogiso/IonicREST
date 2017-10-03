@@ -30,6 +30,8 @@ export class SignupPage {
     public alertCtrl: AlertController,
     public ga: GoogleAnalytics,
   ) {
+  }
+  ionViewDidEnter() {
     this.ga.trackView('signup').then(() => { console.log('GoogleAnalytics OK') });
   }
   signup() {

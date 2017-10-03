@@ -33,11 +33,13 @@ export class SigninPage {
     public alertCtrl: AlertController,
     public ga: GoogleAnalytics,
   ) {
-    this.ga.trackView('signin').then(() => { console.log('GoogleAnalytics OK') });
     this.rememberme = true;
   }
   ionViewDidLoad() {
     setTimeout(() => { this.it.setFocus() }, 500);
+  }
+  ionViewDidEnter() {
+    this.ga.trackView('signin').then(() => { console.log('GoogleAnalytics OK') });
   }
   signup() {
     this.navCtrl.push(SignupPage);
