@@ -39,17 +39,6 @@ export class MyApp {
       { title: 'Home', component: HomePage },
       { title: 'Add', component: AddPage }
     ];
-    this.accountService.getLogin().subscribe(
-      ret => {
-        // ログイン済みセッションの場合はいきなりHomeに行く
-        this.rootPage = ret ? HomePage : SigninPage;
-        this.loadFlg = true;
-      },
-      error => {
-        this.rootPage = SigninPage;
-        this.loadFlg = true;
-      }
-    );
   }
 
   initializeApp() {
@@ -65,8 +54,33 @@ export class MyApp {
           //the component is ready and you can call any method here
           this.ga.debugMode();
           this.ga.setAllowIDFACollection(true);
+
+          this.accountService.getLogin().subscribe(
+            ret => {
+              // ログイン済みセッションの場合はいきなりHomeに行く
+              this.rootPage = ret ? HomePage : SigninPage;
+              this.loadFlg = true;
+            },
+            error => {
+              this.rootPage = SigninPage;
+              this.loadFlg = true;
+            }
+          );
         })
-        .catch(e => console.log('Error starting GoogleAnalytics', e));
+        .catch(e => {
+          console.log('Error starting GoogleAnalytics', e);
+          this.accountService.getLogin().subscribe(
+            ret => {
+              // ログイン済みセッションの場合はいきなりHomeに行く
+              this.rootPage = ret ? HomePage : SigninPage;
+              this.loadFlg = true;
+            },
+            error => {
+              this.rootPage = SigninPage;
+              this.loadFlg = true;
+            }
+          );
+        });
     });
   }
 
