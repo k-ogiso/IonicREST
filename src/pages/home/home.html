@@ -27,15 +27,19 @@
     </ion-list-header>
     <ion-item-sliding *ngFor="let task of tasks.filter(filt)" @viewhide (press)="showAlert(task)">
       <ion-item [color]="task.status===1?'light':''" ion-item>
-        <div class="td" style="width: 35px;" >{{  (task.end_date | date:'EEE') }}</div>
+        <div class="td" style="width: 35px;">{{ (task.end_date | date:'EEE') }}</div>
         <div class="td" style="width: 50px;transition: 0.3s;" [ngClass]="{imp:isToday(task)}"> {{ isToday(task) ? 'today!' : (task.end_date | date:'M/d') }}</div>
         <div class="td">{{ task.item }}</div>
       </ion-item>
-      <ion-item-options *ngIf="task.status!==1 && counter!==-1" side="right">
-        <button ion-button (click)="updateStatus(task,1)" color="danger">Done</button>
+      <ion-item-options side="right">
+        <div *ngIf="task.status!==1; then doneBlock; else delBlock"></div>
+        <ng-template #doneBlock><button ion-button (click)="updateStatus(task,1)" color="danger">Done</button></ng-template>
+        <ng-template #delBlock><button ion-button (click)="updateStatus(task,-1)" color="danger">Delete</button></ng-template>
       </ion-item-options>
-      <ion-item-options *ngIf="task.status!==0 && counter!=-1" side="left">
-        <button ion-button (click)="updateStatus(task,0)" color="primary">Todo</button>
+      <ion-item-options side="left">
+        <div *ngIf="task.status!==0; then todoBlock; else rescheBlock"></div>
+        <ng-template #todoBlock><button ion-button (click)="resche(task)" color="primary">Todo</button></ng-template>
+        <ng-template #rescheBlock><button ion-button (click)="resche(task)" color="primary">Carry</button></ng-template>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>

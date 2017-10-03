@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { TaskServiceProvider } from '../../providers/task-service';
-import { Task } from '../../model/task';
 import { DatePipe } from '@angular/common'
+
+import { TaskServiceProvider } from '../../providers/task-service';
+import { Utils } from '../../utils/utils';
+import { Task } from '../../model/task';
 import { AddPage } from '../add/add';
 import { AlertController } from 'ionic-angular';
 import { trigger, animate, transition, style } from '@angular/animations';
@@ -32,7 +34,7 @@ import { trigger, animate, transition, style } from '@angular/animations';
 })
 export class HomePage {
 
-  currentDate = new Date();
+  currentDate;
   currentDateYmd: string;
   tasks: Task[];
   tglFlg: boolean;
@@ -41,7 +43,6 @@ export class HomePage {
   month2: string;
   day: string;
   year: string;
-  counter: number = 0;
 
   filt = (rec: Task): boolean => {
     const end_date_ymd = this.endDateToYmd(rec.end_date);
@@ -54,24 +55,35 @@ export class HomePage {
   }
   upd = tasks => {
     // 全体リフレッシュするか一部リフレッシュかの判定（アニメーションの感じに関わるところ）
-    let refreshFlg = tasks.length !== this.tasks.length;
-    if (refreshFlg) {
+    const befMap: { [key: number]: Task } = {};
+    const aftMap: { [key: number]: Task } = {};
+    const sabun = this.tasks.length - tasks.length;
+    tasks.forEach(elem => befMap[elem.task_id] = elem);
+    this.tasks.forEach(elem => aftMap[elem.task_id] = elem);
+    if (sabun < 0) {
+      for (let idx = 0; idx < -sabun; idx++) {
+        this.tasks.push(new Task());
+      }
+    } else if (sabun > 0) {
+      this.tasks.splice(tasks.length, sabun);
     } else {
-      for (let idx = 0; idx < tasks.length; idx++) {
-        if (tasks[idx].task_id === this.tasks[idx].task_id) {
-          if (this.tasks[idx].status !== tasks[idx].status) {
-            this.tasks[idx] = tasks[idx];
-          }
-        } else {
-          refreshFlg = true;
-          break;
-        }
+    }
+
+    for (let idx = 0; idx < tasks.length; idx++) {
+      if (this.tasks[idx].status !== tasks[idx].status) {
+        this.tasks[idx] = tasks[idx];
+      } else {
+        Utils.map(tasks[idx], this.tasks[idx]);
       }
     }
-    if (refreshFlg) {
-      this.tasks = tasks;
-    } else {
-    }
+  };
+
+  errorFunc = error => {
+    this.alertCtrl.create({
+      title: 'error',
+      subTitle: 'Network Error!',
+      buttons: ['Close']
+    }).present();
   };
 
   constructor(
@@ -80,6 +92,7 @@ export class HomePage {
     public alertCtrl: AlertController,
     private datePipe: DatePipe
   ) {
+    this.currentDate = new Date();
     this.day = String(this.currentDate.getDate());
     this.month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][this.currentDate.getMonth()];
     this.month2 = String(this.currentDate.getMonth() + 1);
@@ -92,7 +105,7 @@ export class HomePage {
     this.currentDateYmd = this.currentDate.getFullYear() + "-" + m + "-" + d
   }
   ionViewDidEnter() {
-    this.taskService.getTasks().subscribe(this.upd);
+    this.taskService.getTasks().subscribe(this.upd, this.errorFunc);
   }
   endDateToYmd(end_date: string): string {
     return end_date.split(" ")[0];
@@ -101,10 +114,10 @@ export class HomePage {
     return this.endDateToYmd(task.end_date) === this.currentDateYmd;
   }
   addTask(task: Task): void {
-    this.taskService.addTask(task).subscribe();
+    this.taskService.addTask(task).subscribe(() => { }, this.errorFunc);
   }
   delTask(task_id: number): void {
-    this.taskService.delTask(task_id).subscribe();
+    this.taskService.delTask(task_id).subscribe(() => { }, this.errorFunc);
   }
   goToAddPage() {
     this.navCtrl.push(AddPage);
@@ -115,10 +128,26 @@ export class HomePage {
   updateStatus(task, status) {
     if (task.status !== status) {
       this.taskService.updTask(task.task_id, status).subscribe(() => {
-        this.taskService.getTasks().subscribe(this.upd);
-      });
+        this.taskService.getTasks().subscribe(this.upd, this.errorFunc);
+      }, this.errorFunc);
     } else {
     }
+  }
+  resche(task: Task) {
+    let endDate: Date;
+    if (this.endDateToYmd(task.end_date) < this.currentDateYmd) {
+      endDate = new Date();
+    } else {
+      endDate = new Date(new Date(task.end_date).getTime() + 1 * 24 * 60 * 60 * 1000);
+    }
+    const m = ((endDate.getMonth() + 1) > 9 ? '' : '0') + (endDate.getMonth() + 1);
+    const d = (endDate.getDate() > 9 ? '' : '0') + endDate.getDate();
+    const sTask = Utils.map(task, new Task()) as Task;
+    sTask.end_date = endDate.getFullYear() + "-" + m + "-" + d;
+    sTask.status = 0;
+    this.taskService.edtTask(sTask).subscribe(() => {
+      this.taskService.getTasks().subscribe(this.upd, this.errorFunc);
+    }, this.errorFunc)
   }
   showAlert(task: Task) {
     let alert = this.alertCtrl.create({
