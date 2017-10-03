@@ -5,7 +5,7 @@
   "proxies": [
     {
       "path": "/todo/api/",
-      "proxyUrl": "http://kvps-27-34-160-205.secure.ne.jp/Do-no/api/"
+      "proxyUrl": "https://kvps-27-34-160-205.secure.ne.jp/solar-eclipse/Do-no/api/"
     }
   ],
   "integrations": {

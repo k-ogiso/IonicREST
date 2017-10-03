@@ -42,18 +42,28 @@ export class SigninPage {
       user_id: this.user_id,
       password: this.password,
       rememberme: this.rememberme
-    }).subscribe((ret) => {
-      if (ret) {
-        this.navCtrl.setRoot(HomePage);
-      } else {
-        this.password = '';
+    }).subscribe(
+      ret => {
+        if (ret) {
+          this.navCtrl.setRoot(HomePage);
+        } else {
+          this.password = '';
+          let alert = this.alertCtrl.create({
+            title: 'error',
+            subTitle: 'Invalid ID or Password!',
+            buttons: ['Close']
+          });
+          alert.present();
+        }
+      },
+      error => {
         let alert = this.alertCtrl.create({
           title: 'error',
-          subTitle: 'Invalid ID or Password!',
+          subTitle: 'Network Error!',
           buttons: ['Close']
         });
         alert.present();
       }
-    });
+      );
   }
 }

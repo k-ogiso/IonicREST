@@ -5,6 +5,8 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
 import { DecimalPipe, DatePipe } from '@angular/common';
 
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
+
 import { MyApp } from './app.component';
 import { SigninPage } from '../pages/signin/signin';
 import { SignupPage } from '../pages/signup/signup';
@@ -48,6 +50,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     DatePipe, DecimalPipe,
     TaskServiceProvider,
     AccountServiceProvider,
+    GoogleAnalytics
   ]
 })
 export class AppModule { }

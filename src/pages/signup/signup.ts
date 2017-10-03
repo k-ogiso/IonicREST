@@ -50,18 +50,27 @@ export class SignupPage {
         this.accountService.signup({
           user_id: this.user_id,
           password: this.password
-        }).subscribe((ret) => {
-          if (ret) {
-            this.navCtrl.setRoot(HomePage);
-          } else {
+        }).subscribe(
+          ret => {
+            if (ret) {
+              this.navCtrl.setRoot(HomePage);
+            } else {
+              let alert = this.alertCtrl.create({
+                title: 'error',
+                subTitle: 'This ID is already exists!',
+                buttons: ['Close']
+              });
+              alert.present();
+            }
+          },
+          error => {
             let alert = this.alertCtrl.create({
               title: 'error',
-              subTitle: 'This ID is already exists!',
+              subTitle: 'Network Error!',
               buttons: ['Close']
             });
             alert.present();
-          }
-        });
+          });
       }
     } else {
       this.password_v = '';

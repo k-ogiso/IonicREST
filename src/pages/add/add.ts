@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { TaskServiceProvider } from '../../providers/task-service';
 import { Task } from '../../model/task';
 import { NgbDateStruct, NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap';
+import { AlertController } from 'ionic-angular';
 
 /**
  * Generated class for the AddPage page.
@@ -29,10 +30,18 @@ export class AddPage {
   closeResult: string;
   fixedTaskList: string[] = ["pay", "call", "send", "check", "get", "go to"];
   recomendTasks: string[] = [];
+  errorFunc = error => {
+    this.alertCtrl.create({
+      title: 'error',
+      subTitle: 'Network Error!',
+      buttons: ['Close']
+    }).present();
+  };
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public alertCtrl: AlertController,
     private taskService: TaskServiceProvider,
     config: NgbTooltipConfig
   ) {
@@ -67,10 +76,10 @@ export class AddPage {
     const d = (this.endDate.day > 9 ? '' : '0') + this.endDate.day;
     this.task.end_date = this.endDate.year + "-" + m + "-" + d;
     console.log(this.task);
-    if (this.task.task_id == -1) {
-      this.taskService.addTask(this.task).subscribe();
+    if (this.task.task_id > 0) {
+      this.taskService.edtTask(this.task).subscribe(() => { }, this.errorFunc);
     } else {
-      this.taskService.edtTask(this.task).subscribe();
+      this.taskService.addTask(this.task).subscribe(() => { }, this.errorFunc);
     }
     this.goToHomePage();
   }
