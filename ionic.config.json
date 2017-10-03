@@ -4,7 +4,7 @@
   "type": "ionic-angular",
   "proxies": [
     {
-      "path": "/todo/api/",
+      "path": "/solar-eclipse/Do-no/api/",
       "proxyUrl": "https://kvps-27-34-160-205.secure.ne.jp/solar-eclipse/Do-no/api/"
     }
   ],
