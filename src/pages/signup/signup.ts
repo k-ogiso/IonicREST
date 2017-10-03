@@ -30,7 +30,7 @@ export class SignupPage {
     public alertCtrl: AlertController,
     public ga: GoogleAnalytics,
   ) {
-    this.ga.trackView('signup');
+    this.ga.trackView('signup').then(() => { console.log('GoogleAnalytics OK') });
   }
   signup() {
     if (this.password === this.password_v) {

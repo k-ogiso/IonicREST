@@ -96,7 +96,7 @@ export class HomePage {
     private datePipe: DatePipe,
     public ga: GoogleAnalytics,
   ) {
-    this.ga.trackView('home');
+    this.ga.trackView('home').then(() => { console.log('GoogleAnalytics OK') });
     this.currentDate = new Date();
     this.day = String(this.currentDate.getDate());
     this.month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][this.currentDate.getMonth()];
@@ -123,17 +123,17 @@ export class HomePage {
   }
   getPastTasks() {
     this.pastFlg = !this.pastFlg;
-    this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, (this.pastFlg ? 'show' : 'hide') + 'Past');
+    this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, (this.pastFlg ? 'show' : 'hide') + 'Past').then(() => { console.log('GoogleAnalytics OK') });
   }
   includeDone() {
     this.tglFlg = !this.tglFlg;
-    this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, (this.pastFlg ? 'show' : 'hide') + 'Done');
+    this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, (this.pastFlg ? 'show' : 'hide') + 'Done').then(() => { console.log('GoogleAnalytics OK') });
   }
   updateStatus(task, status) {
     if (task.status !== status) {
       this.taskService.updTask(task.task_id, status).subscribe(() => {
         const uiName = { 1: 'done', '-1': 'delete' };
-        this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, uiName[status]);
+        this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, uiName[status]).then(() => { console.log('GoogleAnalytics OK') });
         this.taskService.getTasks().subscribe(this.upd, this.errorFunc);
       }, this.errorFunc);
     } else {
@@ -152,7 +152,7 @@ export class HomePage {
     sTask.end_date = endDate.getFullYear() + "-" + m + "-" + d;
     sTask.status = 0;
     this.taskService.edtTask(sTask).subscribe(() => {
-      this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, task.status === 0 ? 'carry' : 'todo');
+      this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, task.status === 0 ? 'carry' : 'todo').then(() => { console.log('GoogleAnalytics OK') });
       this.taskService.getTasks().subscribe(this.upd, this.errorFunc);
     }, this.errorFunc)
   }
@@ -161,10 +161,19 @@ export class HomePage {
       title: this.datePipe.transform(task.end_date, 'y/M/d(EEE)'),
       subTitle: task.item,
       buttons: [
-        { text: 'Edit', handler: () => { this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'edit'); this.navCtrl.push(AddPage, { target: task }); } },
-        { text: 'Close', handler: () => { this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'closeDetail') } }]
+        {
+          text: 'Edit', handler: () => {
+            this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'edit').then(() => { console.log('GoogleAnalytics OK') });
+            this.navCtrl.push(AddPage, { target: task });
+          }
+        },
+        {
+          text: 'Close', handler: () => {
+            this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'closeDetail').then(() => { console.log('GoogleAnalytics OK') });
+          }
+        }]
     });
     alert.present();
-    this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'showDetail');
+    this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'showDetail').then(() => { console.log('GoogleAnalytics OK') });
   }
 }

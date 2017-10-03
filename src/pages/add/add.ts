@@ -59,12 +59,12 @@ export class AddPage {
       this.task = target;
       const ary = target.end_date.split(' ')[0].split('-');
       this.endDate = { year: Number(ary[0]), month: Number(ary[1]), day: Number(ary[2]) };
-      this.ga.trackView('edit');
+      this.ga.trackView('edit').then(() => { console.log('GoogleAnalytics OK') });
     } else {
       this.task = new Task();
       this.task.task_id = -1;
       this.endDate = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
-      this.ga.trackView('add');
+      this.ga.trackView('add').then(() => { console.log('GoogleAnalytics OK') });
     }
   }
   ionViewDidLoad() {
@@ -85,10 +85,10 @@ export class AddPage {
     console.log(this.task);
     if (this.task.task_id !== -1) {
       this.taskService.addTask(this.task).subscribe(() => { }, this.errorFunc);
-      this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'edit');
+      this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'edit').then(() => { console.log('GoogleAnalytics OK') });
     } else {
       this.taskService.edtTask(this.task).subscribe(() => { }, this.errorFunc);
-      this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'add');
+      this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'add').then(() => { console.log('GoogleAnalytics OK') });
     }
     this.goToHomePage();
   }
@@ -109,6 +109,6 @@ export class AddPage {
     console.log(e);
     this.task.item = task + " ";
     this.showRecomendItem();
-    this.ga.trackEvent(Const.GA_EVENT_UI, 'recommend');
+    this.ga.trackEvent(Const.GA_EVENT_UI, 'recommend').then(() => { console.log('GoogleAnalytics OK') });
   }
 }
