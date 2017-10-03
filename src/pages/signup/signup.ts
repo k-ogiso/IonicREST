@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
+
 import { HomePage } from '../home/home';
 import { AccountServiceProvider } from '../../providers/account-service';
 import { AlertController } from 'ionic-angular';
@@ -25,8 +28,9 @@ export class SignupPage {
     public navParams: NavParams,
     public accountService: AccountServiceProvider,
     public alertCtrl: AlertController,
-
+    public ga: GoogleAnalytics,
   ) {
+    this.ga.trackView('signup');
   }
   signup() {
     if (this.password === this.password_v) {

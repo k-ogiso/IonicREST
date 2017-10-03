@@ -1,5 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
+
 import { HomePage } from '../home/home';
 import { SignupPage } from '../signup/signup';
 import { AccountServiceProvider } from '../../providers/account-service';
@@ -27,8 +30,10 @@ export class SigninPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public accountService: AccountServiceProvider,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public ga: GoogleAnalytics,
   ) {
+    this.ga.trackView('signin');
     this.rememberme = true;
   }
   ionViewDidLoad() {

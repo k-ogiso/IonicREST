@@ -2,8 +2,11 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DatePipe } from '@angular/common'
 
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
+
 import { TaskServiceProvider } from '../../providers/task-service';
 import { Utils } from '../../utils/utils';
+import { Const } from '../../utils/const';
 import { Task } from '../../model/task';
 import { AddPage } from '../add/add';
 import { AlertController } from 'ionic-angular';
@@ -90,8 +93,10 @@ export class HomePage {
     public navCtrl: NavController,
     private taskService: TaskServiceProvider,
     public alertCtrl: AlertController,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    public ga: GoogleAnalytics,
   ) {
+    this.ga.trackView('home');
     this.currentDate = new Date();
     this.day = String(this.currentDate.getDate());
     this.month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][this.currentDate.getMonth()];
@@ -113,21 +118,22 @@ export class HomePage {
   isToday(task: Task) {
     return this.endDateToYmd(task.end_date) === this.currentDateYmd;
   }
-  addTask(task: Task): void {
-    this.taskService.addTask(task).subscribe(() => { }, this.errorFunc);
-  }
-  delTask(task_id: number): void {
-    this.taskService.delTask(task_id).subscribe(() => { }, this.errorFunc);
-  }
   goToAddPage() {
     this.navCtrl.push(AddPage);
   }
   getPastTasks() {
     this.pastFlg = !this.pastFlg;
+    this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, (this.pastFlg ? 'show' : 'hide') + 'Past');
+  }
+  includeDone() {
+    this.tglFlg = !this.tglFlg;
+    this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, (this.pastFlg ? 'show' : 'hide') + 'Done');
   }
   updateStatus(task, status) {
     if (task.status !== status) {
       this.taskService.updTask(task.task_id, status).subscribe(() => {
+        const uiName = { 1: 'done', '-1': 'delete' };
+        this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, uiName[status]);
         this.taskService.getTasks().subscribe(this.upd, this.errorFunc);
       }, this.errorFunc);
     } else {
@@ -146,6 +152,7 @@ export class HomePage {
     sTask.end_date = endDate.getFullYear() + "-" + m + "-" + d;
     sTask.status = 0;
     this.taskService.edtTask(sTask).subscribe(() => {
+      this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, task.status === 0 ? 'carry' : 'todo');
       this.taskService.getTasks().subscribe(this.upd, this.errorFunc);
     }, this.errorFunc)
   }
@@ -154,9 +161,10 @@ export class HomePage {
       title: this.datePipe.transform(task.end_date, 'y/M/d(EEE)'),
       subTitle: task.item,
       buttons: [
-        { text: 'Edit', handler: () => { this.navCtrl.push(AddPage, { target: task }); } },
-        { text: 'Close' }]
+        { text: 'Edit', handler: () => { this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'edit'); this.navCtrl.push(AddPage, { target: task }); } },
+        { text: 'Close', handler: () => { this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'closeDetail') } }]
     });
     alert.present();
+    this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'showDetail');
   }
 }
