@@ -1,8 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { App, NavController, NavParams } from 'ionic-angular';
 
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
+import { Const } from '../../utils/const';
 import { HomePage } from '../home/home';
 import { SignupPage } from '../signup/signup';
 import { AccountServiceProvider } from '../../providers/account-service';
@@ -20,6 +21,7 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'signin.html',
 })
 export class SigninPage {
+  title = 'SignIn';
   @ViewChild("it")
   it: any;
   user_id: string;
@@ -32,6 +34,7 @@ export class SigninPage {
     public accountService: AccountServiceProvider,
     public alertCtrl: AlertController,
     public ga: GoogleAnalytics,
+    public app: App,
   ) {
     this.rememberme = true;
   }
@@ -39,7 +42,8 @@ export class SigninPage {
     setTimeout(() => { this.it.setFocus() }, 500);
   }
   ionViewDidEnter() {
-    this.ga.trackView('signin');
+    this.app.setTitle(`${Const.APP_TITLE} ${this.title}`);
+    this.ga.trackView(this.title);
   }
   signup() {
     this.navCtrl.push(SignupPage);

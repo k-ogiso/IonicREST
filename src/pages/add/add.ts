@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { App, NavController, NavParams } from 'ionic-angular';
 
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
@@ -49,6 +49,7 @@ export class AddPage {
     public taskService: TaskServiceProvider,
     public config: NgbTooltipConfig,
     public ga: GoogleAnalytics,
+    public app: App,
   ) {
     // customize default values of tooltips used by this component tree
     config.placement = 'bottom';
@@ -70,7 +71,9 @@ export class AddPage {
     setTimeout(() => { this.it.setFocus(); }, 1000);
   }
   ionViewDidEnter() {
-    this.ga.trackView(this.task.task_id === -1 ? 'edit' : 'add');
+    const title = this.task.task_id === -1 ? 'Add' : 'Edit';
+    this.app.setTitle(`${Const.APP_TITLE} ${title}`);
+    this.ga.trackView(title);
   }
   goToHomePage() {
     this.navCtrl.pop();

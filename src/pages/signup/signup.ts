@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { App, NavController, NavParams } from 'ionic-angular';
 
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 
+import { Const } from '../../utils/const';
 import { HomePage } from '../home/home';
 import { AccountServiceProvider } from '../../providers/account-service';
 import { AlertController } from 'ionic-angular';
@@ -19,6 +20,8 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'signup.html',
 })
 export class SignupPage {
+  title = 'SignUp';
+
   user_id: string;
   password: string;
   password_v: string;
@@ -29,10 +32,12 @@ export class SignupPage {
     public accountService: AccountServiceProvider,
     public alertCtrl: AlertController,
     public ga: GoogleAnalytics,
+    public app: App,
   ) {
   }
   ionViewDidEnter() {
-    this.ga.trackView('signup');
+    this.app.setTitle(`${Const.APP_TITLE} ${this.title}`);
+    this.ga.trackView(this.title);
   }
   signup() {
     if (this.password === this.password_v) {

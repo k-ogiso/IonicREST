@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { App, NavController } from 'ionic-angular';
 import { DatePipe } from '@angular/common'
 
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
@@ -36,6 +36,7 @@ import { trigger, animate, transition, style } from '@angular/animations';
   ],
 })
 export class HomePage {
+  title = 'Home';
 
   currentDate;
   currentDateYmd: string;
@@ -91,10 +92,11 @@ export class HomePage {
 
   constructor(
     public navCtrl: NavController,
-    private taskService: TaskServiceProvider,
+    public taskService: TaskServiceProvider,
     public alertCtrl: AlertController,
-    private datePipe: DatePipe,
+    public datePipe: DatePipe,
     public ga: GoogleAnalytics,
+    public app: App,
   ) {
     this.currentDate = new Date();
     this.day = String(this.currentDate.getDate());
@@ -110,7 +112,8 @@ export class HomePage {
   }
   ionViewDidEnter() {
     this.taskService.getTasks().subscribe(this.upd, this.errorFunc);
-    this.ga.trackView('home');
+    this.app.setTitle(`${Const.APP_TITLE} ${this.title}`);
+    this.ga.trackView(this.title);
   }
   endDateToYmd(end_date: string): string {
     return end_date.split(" ")[0];
