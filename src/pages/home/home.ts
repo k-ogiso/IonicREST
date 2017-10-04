@@ -110,7 +110,7 @@ export class HomePage {
   }
   ionViewDidEnter() {
     this.taskService.getTasks().subscribe(this.upd, this.errorFunc);
-    this.ga.trackView('home').then(() => { console.log('GoogleAnalytics OK') });
+    this.ga.trackView('home');
   }
   endDateToYmd(end_date: string): string {
     return end_date.split(" ")[0];
@@ -123,17 +123,17 @@ export class HomePage {
   }
   getPastTasks() {
     this.pastFlg = !this.pastFlg;
-    this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, (this.pastFlg ? 'show' : 'hide') + 'Past').then(() => { console.log('GoogleAnalytics OK') });
+    this.ga.trackEvent(Const.GA_EVENT_UI, (this.pastFlg ? 'show' : 'hide') + 'Past');
   }
   includeDone() {
     this.tglFlg = !this.tglFlg;
-    this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, (this.pastFlg ? 'show' : 'hide') + 'Done').then(() => { console.log('GoogleAnalytics OK') });
+    this.ga.trackEvent(Const.GA_EVENT_UI, (this.pastFlg ? 'show' : 'hide') + 'Done');
   }
   updateStatus(task, status) {
     if (task.status !== status) {
       this.taskService.updTask(task.task_id, status).subscribe(() => {
         const uiName = { 1: 'done', '-1': 'delete' };
-        this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, uiName[status]).then(() => { console.log('GoogleAnalytics OK') });
+        this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, uiName[status]);
         this.taskService.getTasks().subscribe(this.upd, this.errorFunc);
       }, this.errorFunc);
     } else {
@@ -152,7 +152,7 @@ export class HomePage {
     sTask.end_date = endDate.getFullYear() + "-" + m + "-" + d;
     sTask.status = 0;
     this.taskService.edtTask(sTask).subscribe(() => {
-      this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, task.status === 0 ? 'carry' : 'todo').then(() => { console.log('GoogleAnalytics OK') });
+      this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, task.status === 0 ? 'carry' : 'todo');
       this.taskService.getTasks().subscribe(this.upd, this.errorFunc);
     }, this.errorFunc)
   }
@@ -163,17 +163,17 @@ export class HomePage {
       buttons: [
         {
           text: 'Edit', handler: () => {
-            this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'edit').then(() => { console.log('GoogleAnalytics OK') });
+            this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'edit');
             this.navCtrl.push(AddPage, { target: task });
           }
         },
         {
           text: 'Close', handler: () => {
-            this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'closeDetail').then(() => { console.log('GoogleAnalytics OK') });
+            this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'closeDetail');
           }
         }]
     });
     alert.present();
-    this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'showDetail').then(() => { console.log('GoogleAnalytics OK') });
+    this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'showDetail');
   }
 }

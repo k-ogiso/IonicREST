@@ -32,7 +32,7 @@ export class SignupPage {
   ) {
   }
   ionViewDidEnter() {
-    this.ga.trackView('signup').then(() => { console.log('GoogleAnalytics OK') });
+    this.ga.trackView('signup');
   }
   signup() {
     if (this.password === this.password_v) {

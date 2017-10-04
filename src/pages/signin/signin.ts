@@ -39,7 +39,7 @@ export class SigninPage {
     setTimeout(() => { this.it.setFocus() }, 500);
   }
   ionViewDidEnter() {
-    this.ga.trackView('signin').then(() => { console.log('GoogleAnalytics OK') });
+    this.ga.trackView('signin');
   }
   signup() {
     this.navCtrl.push(SignupPage);

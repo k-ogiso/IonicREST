@@ -52,36 +52,29 @@ export class MyApp {
         .then(() => {
           console.log('Google analytics is ready now');
           //the component is ready and you can call any method here
-          this.ga.debugMode();
+          // this.ga.debugMode();
           this.ga.setAllowIDFACollection(true);
-
-          this.accountService.getLogin().subscribe(
-            ret => {
-              // ログイン済みセッションの場合はいきなりHomeに行く
-              this.rootPage = ret ? HomePage : SigninPage;
-              this.loadFlg = true;
-            },
-            error => {
-              this.rootPage = SigninPage;
-              this.loadFlg = true;
-            }
-          );
+          this.loaded();
         })
         .catch(e => {
           console.log('Error starting GoogleAnalytics', e);
-          this.accountService.getLogin().subscribe(
-            ret => {
-              // ログイン済みセッションの場合はいきなりHomeに行く
-              this.rootPage = ret ? HomePage : SigninPage;
-              this.loadFlg = true;
-            },
-            error => {
-              this.rootPage = SigninPage;
-              this.loadFlg = true;
-            }
-          );
+          this.loaded();
         });
     });
+  }
+
+  loaded(): void {
+    this.accountService.getLogin().subscribe(
+      ret => {
+        // ログイン済みセッションの場合はいきなりHomeに行く
+        this.rootPage = ret ? HomePage : SigninPage;
+        this.loadFlg = true;
+      },
+      error => {
+        this.rootPage = SigninPage;
+        this.loadFlg = true;
+      }
+    );
   }
 
   openPage(page) {
