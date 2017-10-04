@@ -133,8 +133,8 @@ export class HomePage {
     if (task.status !== status) {
       this.taskService.updTask(task.task_id, status).subscribe(() => {
         const uiName = { 1: 'done', '-1': 'delete' };
-        this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, uiName[status]);
         this.taskService.getTasks().subscribe(this.upd, this.errorFunc);
+        this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, uiName[status]);
       }, this.errorFunc);
     } else {
     }
@@ -152,8 +152,8 @@ export class HomePage {
     sTask.end_date = endDate.getFullYear() + "-" + m + "-" + d;
     sTask.status = 0;
     this.taskService.edtTask(sTask).subscribe(() => {
-      this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, task.status === 0 ? 'carry' : 'todo');
       this.taskService.getTasks().subscribe(this.upd, this.errorFunc);
+      this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, task.status === 0 ? 'carry' : 'todo');
     }, this.errorFunc)
   }
   showAlert(task: Task) {
@@ -163,8 +163,8 @@ export class HomePage {
       buttons: [
         {
           text: 'Edit', handler: () => {
-            this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'edit');
             this.navCtrl.push(AddPage, { target: task });
+            this.ga.trackEvent(Const.GA_EVENT_EDIT_TASK, 'edit');
           }
         },
         {

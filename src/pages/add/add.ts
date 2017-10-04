@@ -54,10 +54,21 @@ export class AddPage {
     config.placement = 'bottom';
     config.triggers = 'click';
     this.recomendTasks = [];
+    const target = this.navParams.get('target') as Task;
+    if (target) {
+      this.task = target;
+      const ary = target.end_date.split(' ')[0].split('-');
+      this.endDate = { year: Number(ary[0]), month: Number(ary[1]), day: Number(ary[2]) };
+    } else {
+      this.task = new Task();
+      this.task.task_id = -1;
+      this.endDate = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
+    }
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddPage');
     setTimeout(() => { this.it.setFocus(); }, 1000);
+    this.ga.trackView(this.task.task_id === -1 ? 'edit' : 'add');
   }
   ionViewDidEnter() {
     const target = this.navParams.get('target') as Task;
