@@ -3,4 +3,28 @@ page-signin {
     .col {
         padding-left: 16px;
     }
+    .fb-button {
+        position: relative; // left: 40%;
+        // bottom: -25%;
+        margin: auto;
+        height: 40px;
+        background-color: #4267b2;
+        vertical-align: middle;
+        border-radius: 4px;
+        display: flex;
+        cursor: pointer;
+        >svg {
+            height: 24px;
+            width: 24px;
+            margin: 8px;
+            margin-left: auto;
+            display: inline-block
+        }
+        >div {
+            margin: auto 24px auto 12px;
+            margin-right: auto;
+            color: white;
+            display: inline-block;
+        }
+    }
 }

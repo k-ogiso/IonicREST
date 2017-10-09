@@ -39,7 +39,7 @@
       <ion-item-options side="left">
         <div *ngIf="task.status!==0; then todoBlock; else rescheBlock"></div>
         <ng-template #todoBlock><button ion-button (click)="resche(task)" color="primary">Todo</button></ng-template>
-        <ng-template #rescheBlock><button ion-button (click)="resche(task)" color="primary">Carry</button></ng-template>
+        <ng-template #rescheBlock><button ion-button (click)="resche(task)" color="primary">Postpone</button></ng-template>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>

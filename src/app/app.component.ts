@@ -4,6 +4,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
+import { Facebook } from '@ionic-native/facebook';
+// import { FacebookService, InitParams } from 'ngx-facebook';
 
 import { HomePage } from '../pages/home/home';
 import { AddPage } from '../pages/add/add';
@@ -27,7 +29,8 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public accountService: AccountServiceProvider,
-    private ga: GoogleAnalytics
+    public ga: GoogleAnalytics,
+    public fb: Facebook,
   ) {
     this.initializeApp();
     this.loadFlg = false;
@@ -54,15 +57,26 @@ export class MyApp {
           //the component is ready and you can call any method here
           // this.ga.debugMode();
           this.ga.setAllowIDFACollection(true);
-          this.loaded();
+          this.fblogin();
         })
         .catch(e => {
           console.log('Error starting GoogleAnalytics', e);
-          this.loaded();
+          this.fblogin();
         });
     });
   }
-
+  fblogin(): void {
+    this.fb.getLoginStatus()
+      .then(res => {
+        // ログイン済みセッションの場合はいきなりHomeに行く
+        this.rootPage = res.status === 'connected' ? HomePage : SigninPage;
+        this.loadFlg = true;
+      })
+      .catch(res => {
+        alert('catch:' + res.status);
+        this.loaded();
+      });
+  }
   loaded(): void {
     this.accountService.getLogin().subscribe(
       ret => {
