@@ -73,16 +73,13 @@ export class MyApp {
           this.accountService.facebookLogin({
             accessToken: res.authResponse.accessToken,
           }).subscribe(ret => {
-            this.rootPage = HomePage;
-            this.loadFlg = true;
+            this.loaded();
           });
         } else {
-          this.rootPage = SigninPage;
-          this.loadFlg = true;
+          this.loaded();
         }
       })
       .catch(res => {
-        // alert('catch:' + res.status);
         this.loaded();
       });
   }
