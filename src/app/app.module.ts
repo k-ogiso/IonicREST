@@ -6,6 +6,8 @@ import { HttpModule } from '@angular/http';
 import { DecimalPipe, DatePipe } from '@angular/common';
 
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
+import { Facebook } from '@ionic-native/facebook';
+// import { FacebookModule } from 'ngx-facebook';
 
 import { MyApp } from './app.component';
 import { SigninPage } from '../pages/signin/signin';
@@ -33,7 +35,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserAnimationsModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    // FacebookModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -50,7 +53,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     DatePipe, DecimalPipe,
     TaskServiceProvider,
     AccountServiceProvider,
-    GoogleAnalytics
+    GoogleAnalytics,
+    Facebook,
   ]
 })
 export class AppModule { }

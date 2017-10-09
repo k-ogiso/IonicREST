@@ -35,4 +35,12 @@ export class AccountServiceProvider {
         .map(res => res.json() as boolean);
         // return this.http.get(`${this.baseURL}/true.json`)
     }
+    /**
+     * facebookログイン
+     */
+    facebookLogin(login): Observable<boolean> {
+        // return this.http.get(`${this.baseURL}/true.json`)
+        return this.http.put(`${this.baseURL}/facebooklogin`, login)
+            .map(res => res.json() as boolean);
+    }
 }

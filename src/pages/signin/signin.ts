@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { App, NavController, NavParams } from 'ionic-angular';
 
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 
 import { Const } from '../../utils/const';
 import { HomePage } from '../home/home';
@@ -27,6 +28,7 @@ export class SigninPage {
   user_id: string;
   password: string;
   rememberme: boolean;
+  sts: string;
 
   constructor(
     public navCtrl: NavController,
@@ -35,6 +37,7 @@ export class SigninPage {
     public alertCtrl: AlertController,
     public ga: GoogleAnalytics,
     public app: App,
+    public fb: Facebook,
   ) {
     this.rememberme = true;
   }
@@ -44,6 +47,23 @@ export class SigninPage {
   ionViewDidEnter() {
     this.app.setTitle(`${Const.APP_TITLE} ${this.title}`);
     this.ga.trackView(this.title);
+  }
+  facebookLogin() {
+    this.fb.login(['public_profile,email'])
+      .then((res: FacebookLoginResponse) => {
+        // alert('then:' + res.status);
+        if (res.status === 'connected') {
+          this.accountService.facebookLogin({
+            accessToken: res.authResponse.accessToken,
+          }).subscribe(ret => {
+            this.navCtrl.setRoot(HomePage);
+          });
+        } else {
+        }
+      })
+      .catch(res => {
+        alert('Error:' + res);
+      });
   }
   signup() {
     this.navCtrl.push(SignupPage);
