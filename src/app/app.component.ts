@@ -69,11 +69,20 @@ export class MyApp {
     this.fb.getLoginStatus()
       .then(res => {
         // ログイン済みセッションの場合はいきなりHomeに行く
-        this.rootPage = res.status === 'connected' ? HomePage : SigninPage;
-        this.loadFlg = true;
+        if (res.status === 'connected') {
+          this.accountService.facebookLogin({
+            accessToken: res.authResponse.accessToken,
+          }).subscribe(ret => {
+            this.rootPage = HomePage;
+            this.loadFlg = true;
+          });
+        } else {
+          this.rootPage = SigninPage;
+          this.loadFlg = true;
+        }
       })
       .catch(res => {
-        alert('catch:' + res.status);
+        // alert('catch:' + res.status);
         this.loaded();
       });
   }
